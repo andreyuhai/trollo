@@ -34,6 +34,30 @@ export default {
     },
 
     methods: {
+        cardMoved: function(event) {
+            console.log(event)
+            const evt = event.added || event.moved
+            if (evt == undefined) { return }
+
+            const element = evt.element
+            const list_index = this.lists.findIndex((list) => {
+                return list.cards.find((card) => {
+                    return card.id == element.id
+                })
+            })
+
+            var data = new FormData
+            data.append("card[list_id]", this.lists[list_index].id)
+            data.append("card[position]", evt.newIndex + 1)
+
+            Rails.ajax({
+                url: `cards/${element.id}/move`,
+                type: "PATCH",
+                data: data,
+                dataType: "json"
+            })
+        },
+
         listMoved: function(event) {
             var data = new FormData
             data.append("list[position]", event.newIndex + 1)
