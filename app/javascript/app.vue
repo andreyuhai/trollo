@@ -4,9 +4,11 @@
         <h6>{{ list.name }}</h6>
         <hr/>
 
-        <div v-for="(card, index) in list.cards" class="card card-body mb-3">
-           {{ card.name }}
-        </div>
+        <draggable v-model="list.cards" group="cards" class="dragArea" @change="cardMoved">
+            <div v-for="(card, index) in list.cards" class="card card-body mb-3">
+                {{ card.name }}
+            </div>
+        </draggable>
 
         <div class="card card-body">
         <textarea v-model="messages[list.id]" class="form-control mb-2"></textarea>
