@@ -16,6 +16,8 @@ import 'data-confirm-modal'
 import Vue from 'vue/dist/vue.esm'
 import App from '../app.vue'
 
+window.store = {}
+
 $(document).on("turbolinks:load", () => {
   $('[data-toggle="tooltip"]').tooltip()
   $('[data-toggle="popover"]').popover()
@@ -23,12 +25,11 @@ $(document).on("turbolinks:load", () => {
 
 document.addEventListener("turbolinks:load", function() {
     var element = document.querySelector("#boards")
+    window.store.lists = JSON.parse(element.dataset.lists)
     if (element != undefined) {
         const app = new Vue({
             el: element,
-            data: {
-                lists: JSON.parse(element.dataset.lists)
-            },
+            data: window.store,
             template: "<App :original_lists='lists' />",
             components: { App }
         })
