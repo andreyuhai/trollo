@@ -86,16 +86,6 @@ export default {
     min-height: 20px;
 }
 
-.list {
-    background: #E2E4E6;
-    border-radius: 3px;
-    display: inline-block;
-    vertical-align: top;
-    margin-right: 10px;
-    padding: 10px;
-    width: 270px;
-}
-
 .card {
     padding: 1rem;
     border: 1px solid #fff;
