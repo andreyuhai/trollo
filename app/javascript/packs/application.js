@@ -14,9 +14,32 @@ window.Rails = Rails
 import 'bootstrap'
 import 'data-confirm-modal'
 import Vue from 'vue/dist/vue.esm'
+import Vuex from 'vuex'
 import App from '../app.vue'
 
-window.store = {}
+Vue.use(Vuex)
+
+window.store = new Vuex.Store({
+    state: {
+        lists: []
+    },
+
+    mutations: {
+        addList(state, data) {
+            state.lists.push(data)
+        },
+        addCard(state, data) {
+            const index = state.lists.findIndex(item => item.id == data.list_id)
+            state.lists[index].cards.push(data)
+        },
+        editCard(state, data) {
+            const list_index = state.lists.findIndex((item) => item.id == data.list_id)
+            const card_index = state.lists[list_index].cards.findIndex((item) => item.id == data.id)
+
+            state.lists[list_index].cards.splice(card_index, 1, data)
+        },
+    }
+})
 
 $(document).on("turbolinks:load", () => {
   $('[data-toggle="tooltip"]').tooltip()
@@ -25,12 +48,14 @@ $(document).on("turbolinks:load", () => {
 
 document.addEventListener("turbolinks:load", function() {
     var element = document.querySelector("#boards")
-    window.store.lists = JSON.parse(element.dataset.lists)
+
     if (element != undefined) {
+        window.store.state.lists = JSON.parse(element.dataset.lists)
+
         const app = new Vue({
             el: element,
-            data: window.store,
-            template: "<App :original_lists='lists' />",
+            store: window.store,
+            template: "<App />",
             components: { App }
         })
     }
