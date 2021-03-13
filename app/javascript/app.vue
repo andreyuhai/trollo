@@ -46,7 +46,7 @@ export default {
             })
         },
 
-        submitMessage: function() {
+        createList: function() {
             var data = new FormData
             data.append("list[name]", this.message)
 
