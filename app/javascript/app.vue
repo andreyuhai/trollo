@@ -1,6 +1,6 @@
 <template>
     <draggable :list="lists" group="lists" class="board dragArea" @end="listMoved">
-        <list v-for="(list, index) in original_lists" :list='list'>
+        <list v-for="(list, index) in lists" :list='list'>
         </list>
         <div class="list">
             <a v-if="!editing" v-on:click="startEditing">Add a list</a>
