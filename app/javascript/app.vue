@@ -18,13 +18,16 @@ import list from 'components/list'
 export default {
     components: { draggable, list },
 
-    props: ["original_lists"],
-
     data: function() {
         return {
-            lists: this.original_lists,
             editing: false,
             message: "",
+        }
+    },
+
+    computed: {
+        lists() {
+            return this.$store.state.lists;
         }
     },
 
@@ -56,7 +59,7 @@ export default {
                 data: data,
                 dataType: "json",
                 success: (data) => {
-                    window.store.lists.push(data)
+                    this.$store.commit('addList', data)
                     this.message = ""
                     this.editing = false
                 }
